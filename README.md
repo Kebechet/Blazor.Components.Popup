@@ -85,3 +85,9 @@ public partial class YesNoComponent : IPopupable<bool?>
 ```
 
 - ENJOY 🎉
+
+## Future tasks:
+- [ ] Add support for multiple popups at the same time
+    - Probably through ref like: https://demos.blazorbootstrap.com/confirm-dialog
+- [ ] Consider using `Dialog` HTML element instead of `div`
+    - https://www.youtube.com/watch?v=q1fsBWLpYW4&t=33s
