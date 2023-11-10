@@ -1,0 +1,34 @@
+﻿using Microsoft.AspNetCore.Components;
+using System.Reflection;
+
+namespace Blazor.Components.Popup.Extensions;
+
+public static class IComponentExtensions
+{
+	public static RenderFragment CreateRenderFragmentFromInstance(this IComponent instance, IComponent component)
+	{
+		int attributeNumber = 0;
+
+		return builder =>
+		{
+			builder.OpenComponent(attributeNumber++, instance.GetType());
+
+			var properties = instance.GetType().GetProperties(BindingFlags.Public | BindingFlags.Instance);
+			foreach (var property in properties)
+			{
+				if (property.PropertyType == typeof(EventCallback))
+				{
+					var originalCallback = (EventCallback)property.GetValue(instance)!;
+					var newCallback = EventCallback.Factory.Create(component, () => originalCallback.InvokeAsync(null));
+					builder.AddAttribute(attributeNumber++, property.Name, newCallback);
+				}
+				else
+				{
+					builder.AddAttribute(attributeNumber++, property.Name, property.GetValue(instance));
+				}
+			}
+
+			builder.CloseComponent();
+		};
+	}
+}

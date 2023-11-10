@@ -1,0 +1,10 @@
+﻿@inject PopupWrapperService _popupWrapperService
+
+@if (IsVisible)
+{
+	<div class="popup-cover @ClassesForPopupCover" @onclick="OnCoverClick">
+		<div class="@ClassesForPopupContent" @onclick:stopPropagation=@true>
+			@ChildContent
+		</div>
+	</div>
+}
