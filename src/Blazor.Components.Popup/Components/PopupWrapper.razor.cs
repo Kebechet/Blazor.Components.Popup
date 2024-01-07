@@ -20,7 +20,6 @@ public partial class PopupWrapper
 	public void RenderPopupContent(RenderFragment renderFragment)
 	{
 		ChildContent = renderFragment;
-		InvokeAsync(StateHasChanged);
 	}
 
 	public void Show()
