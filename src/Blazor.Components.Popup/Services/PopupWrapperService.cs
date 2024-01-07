@@ -44,6 +44,8 @@ public class PopupWrapperService
             returnValue = default;
         }
 
+		_currentPopupWrapper!.Hide();
+
 		return returnValue;
 	}
 
