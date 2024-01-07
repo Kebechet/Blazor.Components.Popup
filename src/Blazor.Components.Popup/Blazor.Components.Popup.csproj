@@ -17,8 +17,8 @@
 		<PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
 		<RepositoryType>git</RepositoryType>
 		<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
-		<Version>1.0.0</Version>
-		<PackageReleaseNotes>First release of the package</PackageReleaseNotes>
+		<Version>1.0.1</Version>
+		<PackageReleaseNotes>Fixed EventCallbacks and rendering crash</PackageReleaseNotes>
 	</PropertyGroup>	
 	
 		<ItemGroup>
