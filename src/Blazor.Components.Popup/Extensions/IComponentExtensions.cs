@@ -31,4 +31,25 @@ public static class IComponentExtensions
 			builder.CloseComponent();
 		};
 	}
+
+	//https://github.com/dotnet/aspnetcore/issues/51987
+	public static (EventCallback<T> WrappedEventCallback, TaskCompletionSource<T> TaskCompletionSource) WrapEventCallback<T>(
+		this EventCallback<T> originalCallback,
+		IComponent namespaceComponent,
+		CancellationToken cancellationToken = default)
+	{
+		var taskSource = new TaskCompletionSource<T>();
+		cancellationToken.Register(() => taskSource.TrySetCanceled());
+
+		var wrappedCallback = EventCallback.Factory.Create<T>(namespaceComponent, async arg =>
+		{
+			if (originalCallback.HasDelegate)
+			{
+				await originalCallback.InvokeAsync(arg);
+			}
+			taskSource.SetResult(arg);
+		});
+
+		return (wrappedCallback, taskSource);
+	}
 }

@@ -30,29 +30,19 @@ public class PopupWrapperService
 		var renderFragment = componentToRender.CreateRenderFragmentFromInstance(namespaceComponent);
 		_currentPopupWrapper.RenderPopupContent(renderFragment);
 
-		#region https://github.com/dotnet/aspnetcore/issues/51987
-		var taskSource = new TaskCompletionSource<T?>();
-
 		_cancellationTokenSource = new();
-		_cancellationTokenSource.Token.Register(() =>
-		{
-			taskSource.TrySetCanceled();
-		});
+        var (wrappedEventCallback, taskCompletionSource) = componentToRender.OnReturn.WrapEventCallback(namespaceComponent, _cancellationTokenSource.Token);
+        componentToRender.OnReturn = wrappedEventCallback;
 
-		componentToRender.OnReturn = EventCallback.Factory.Create<T?>(namespaceComponent, taskSource.SetResult);
-
-		T? returnValue = default;
-		try
-		{
-			returnValue = await taskSource.Task;
-		}
-		catch (OperationCanceledException)
-		{
-			returnValue = default;
-		}
-		#endregion
-
-		_currentPopupWrapper.Hide();
+        T? returnValue;
+        try
+        {
+            returnValue = await taskCompletionSource.Task;
+        }
+        catch (OperationCanceledException)
+        {
+            returnValue = default;
+        }
 
 		return returnValue;
 	}
