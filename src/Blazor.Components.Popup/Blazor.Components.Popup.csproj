@@ -17,8 +17,8 @@
 		<PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
 		<RepositoryType>git</RepositoryType>
 		<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
-		<Version>1.0.1</Version>
-		<PackageReleaseNotes>Fixed EventCallbacks and rendering crash</PackageReleaseNotes>
+		<Version>1.0.2</Version>
+		<PackageReleaseNotes>Fixed popup auto-close problem</PackageReleaseNotes>
 	</PropertyGroup>	
 	
 		<ItemGroup>
