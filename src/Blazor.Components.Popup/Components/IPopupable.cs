@@ -4,5 +4,5 @@ namespace Blazor.Components.Popup.Components;
 
 public interface IPopupable<T> : IComponent
 {
-	EventCallback<T?> OnReturn { get; set; }
+    EventCallback<T?> OnReturn { get; set; }
 }

@@ -11,7 +11,7 @@ builder.Services.AddPopupWrapperServices();
 
 ## Usage
 - Ideally in `MainLayout.razor` put `<PopupWrapper />` component. This component is controlled from `PopupService` and it's purpose is to render popup content.
-	- ⚠️ At one time only 1 popup can be rendered.
+    - ⚠️ At one time only 1 popup can be rendered.
 - In component where you would like to render popup inject Popup service like:
 ```cs
 @inject PopupWrapperService _popupWrapperService

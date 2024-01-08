@@ -5,9 +5,9 @@ namespace Blazor.Components.Popup.Extensions;
 
 public static class IServiceCollectionExtensions
 {
-	public static IServiceCollection AddPopupWrapperServices(this IServiceCollection services)
-	{
-		services.AddSingleton<PopupWrapperService>();
-		return services;
-	}
+    public static IServiceCollection AddPopupWrapperServices(this IServiceCollection services)
+    {
+        services.AddSingleton<PopupWrapperService>();
+        return services;
+    }
 }
