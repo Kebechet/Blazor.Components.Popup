@@ -2,8 +2,8 @@
 
 @if (IsVisible)
 {
-	<div class="popup-cover @ClassesForPopupCover" @onclick="OnCoverClick">
-		<div class="@ClassesForPopupContent" @onclick:stopPropagation=@true>
+    <div id="ex-popup-cover" class="@ClassesForPopupCover" style=@_style @onclick="OnCoverClick" @onclick:stopPropagation=@true>
+        <div class="@ClassesForPopupContent" @onclick:stopPropagation=@true>
 			@ChildContent
 		</div>
 	</div>

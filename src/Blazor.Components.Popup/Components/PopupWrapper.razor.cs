@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Components;
+﻿using Blazor.Components.Popup.Enums;
+using Blazor.Components.Popup.Extensions;
+using Microsoft.AspNetCore.Components;
 
 namespace Blazor.Components.Popup.Components;
 
@@ -12,6 +14,29 @@ public partial class PopupWrapper
 
 	public bool IsVisible { get; set; }
 
+	private bool _isContentCentered = true;
+	private double _opacity = 0.8;
+	private double _blur = 4;
+	private string _styleToCenterContent = 
+		"justify-content: center;" +
+		"align-items: center;";
+	private string _style =>
+		"z-index: 2000;" +
+		"display: flex;" +
+		"position: absolute;" +
+		"top: 0;" +
+		"left: 0;" +
+		"height: 100%;" +
+		"width: 100%;" +
+		"padding: 10px;" +
+		"pointer-events: all;" +
+		$"background-color: rgba(0, 0, 0, {_opacity});" +
+		$"backdrop-filter: blur({_blur}px);" + 
+		(_isContentCentered
+			? _styleToCenterContent
+			: string.Empty
+		);
+
 	protected override void OnInitialized()
 	{
 		_popupWrapperService.Initialize(this);
@@ -22,8 +47,15 @@ public partial class PopupWrapper
 		ChildContent = renderFragment;
 	}
 
-	public void Show()
+	public void Show(bool isContentCentered, ModalType? modalType = null)
 	{
+		_isContentCentered = isContentCentered;
+
+		if(modalType is not null)
+		{
+			(_opacity, _blur) = modalType.Value.ToProperties();
+		}
+
 		IsVisible = true;
 		InvokeAsync(StateHasChanged);
 	}

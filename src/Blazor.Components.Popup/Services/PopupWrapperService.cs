@@ -1,4 +1,5 @@
 ﻿using Blazor.Components.Popup.Components;
+using Blazor.Components.Popup.Enums;
 using Blazor.Components.Popup.Extensions;
 using Microsoft.AspNetCore.Components;
 
@@ -19,30 +20,35 @@ public class PopupWrapperService
 	}
 
 	public async Task<T?> Show<T>(IPopupable<T?> componentToRender, IComponent namespaceComponent)
+	{ 
+		return await Show(componentToRender, namespaceComponent, true, null);
+	}
+
+	public async Task<T?> Show<T>(IPopupable<T?> componentToRender, IComponent namespaceComponent, bool isContentCentered, ModalType? modalType)
 	{
 		if (_currentPopupWrapper is null)
 		{
 			throw new InvalidOperationException("PopupWrapper is not initialized");
 		}
 
-		_currentPopupWrapper.Show();
+		_currentPopupWrapper.Show(isContentCentered, modalType);
 
 		var renderFragment = componentToRender.CreateRenderFragmentFromInstance(namespaceComponent);
 		_currentPopupWrapper.RenderPopupContent(renderFragment);
 
 		_cancellationTokenSource = new();
-        var (wrappedEventCallback, taskCompletionSource) = componentToRender.OnReturn.WrapEventCallback(namespaceComponent, _cancellationTokenSource.Token);
-        componentToRender.OnReturn = wrappedEventCallback;
+		var (wrappedEventCallback, taskCompletionSource) = componentToRender.OnReturn.WrapEventCallback(namespaceComponent, _cancellationTokenSource.Token);
+		componentToRender.OnReturn = wrappedEventCallback;
 
-        T? returnValue;
-        try
-        {
-            returnValue = await taskCompletionSource.Task;
-        }
-        catch (OperationCanceledException)
-        {
-            returnValue = default;
-        }
+		T? returnValue;
+		try
+		{
+			returnValue = await taskCompletionSource.Task;
+		}
+		catch (OperationCanceledException)
+		{
+			returnValue = default;
+		}
 
 		_currentPopupWrapper!.Hide();
 
