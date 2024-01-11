@@ -23,7 +23,7 @@ public partial class PopupWrapper
     private string _style =>
         "z-index: 2000;" +
         "display: flex;" +
-        "position: absolute;" +
+        "position: fixed;" +
         "top: 0;" +
         "left: 0;" +
         "height: 100%;" +
