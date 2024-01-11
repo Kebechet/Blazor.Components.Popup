@@ -17,8 +17,8 @@
     <PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
     <RepositoryType>git</RepositoryType>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
-    <Version>1.1.0</Version>
-    <PackageReleaseNotes>Added modal customization</PackageReleaseNotes>
+    <Version>1.1.1</Version>
+    <PackageReleaseNotes>Fixed position for disabling scrolling</PackageReleaseNotes>
   </PropertyGroup>	
   
     <ItemGroup>
