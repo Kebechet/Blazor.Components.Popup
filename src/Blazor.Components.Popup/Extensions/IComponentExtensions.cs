@@ -5,7 +5,7 @@ namespace Blazor.Components.Popup.Extensions;
 
 public static class IComponentExtensions
 {
-    public static RenderFragment CreateRenderFragmentFromInstance(this IComponent instance, IComponent namespaceComponent)
+    public static RenderFragment CreateRenderFragmentFromInstance(this IComponent instance)
     {
         int attributeNumber = 0;
 
@@ -20,13 +20,13 @@ public static class IComponentExtensions
                 {
                     var originalCallback = (EventCallback)property.GetValue(instance)!;
 
-                    var wrappedCallback = EventCallback.Factory.Create(namespaceComponent, async arg =>
+                    var wrappedCallback = new EventCallback(null, new Func<object, Task>(async (arg) =>
                     {
                         if (originalCallback.HasDelegate)
                         {
                             await originalCallback.InvokeAsync(arg);
                         }
-                    });
+                    }));
 
                     builder.AddAttribute(attributeNumber++, property.Name, wrappedCallback);
                 }
@@ -43,20 +43,19 @@ public static class IComponentExtensions
     //https://github.com/dotnet/aspnetcore/issues/51987
     public static (EventCallback<T> WrappedEventCallback, TaskCompletionSource<T> TaskCompletionSource) WrapEventCallback<T>(
         this EventCallback<T> originalCallback,
-        IComponent namespaceComponent,
         CancellationToken cancellationToken = default)
     {
         var taskSource = new TaskCompletionSource<T>();
         cancellationToken.Register(() => taskSource.TrySetCanceled());
 
-        var wrappedCallback = EventCallback.Factory.Create<T>(namespaceComponent, async arg =>
+        var wrappedCallback = new EventCallback<T>(null, new Func<T, Task>(async (arg) =>
         {
             if (originalCallback.HasDelegate)
             {
                 await originalCallback.InvokeAsync(arg);
             }
             taskSource.SetResult(arg);
-        });
+        }));
 
         return (wrappedCallback, taskSource);
     }

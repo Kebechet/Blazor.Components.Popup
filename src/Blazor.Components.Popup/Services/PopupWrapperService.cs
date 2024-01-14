@@ -19,12 +19,12 @@ public class PopupWrapperService
         );
     }
 
-    public async Task<T?> Show<T>(IPopupable<T?> componentToRender, IComponent namespaceComponent)
+    public async Task<T?> Show<T>(IPopupable<T?> componentToRender)
     {
-        return await Show(componentToRender, namespaceComponent, true, null);
+        return await Show(componentToRender, true, null);
     }
 
-    public async Task<T?> Show<T>(IPopupable<T?> componentToRender, IComponent namespaceComponent, bool isContentCentered, ModalType? modalType)
+    public async Task<T?> Show<T>(IPopupable<T?> componentToRender, bool isContentCentered, ModalType? modalType)
     {
         if (_currentPopupWrapper is null)
         {
@@ -33,11 +33,11 @@ public class PopupWrapperService
 
         _currentPopupWrapper.Show(isContentCentered, modalType);
 
-        var renderFragment = componentToRender.CreateRenderFragmentFromInstance(namespaceComponent);
+        var renderFragment = componentToRender.CreateRenderFragmentFromInstance();
         _currentPopupWrapper.RenderPopupContent(renderFragment);
 
         _cancellationTokenSource = new();
-        var (wrappedEventCallback, taskCompletionSource) = componentToRender.OnReturn.WrapEventCallback(namespaceComponent, _cancellationTokenSource.Token);
+        var (wrappedEventCallback, taskCompletionSource) = componentToRender.OnReturn.WrapEventCallback(_cancellationTokenSource.Token);
         componentToRender.OnReturn = wrappedEventCallback;
 
         T? returnValue;
