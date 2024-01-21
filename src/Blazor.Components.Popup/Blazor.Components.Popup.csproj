@@ -1,13 +1,13 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Razor">
 
   <PropertyGroup>
-    <TargetFramework>net7.0</TargetFramework>
+    <TargetFramework>net8.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
 
-
   <PropertyGroup Label="NugetProperties">
+    <Authors>Kebechet</Authors>
     <IsPackable>true</IsPackable>
     <PackageId>Kebechet.Blazor.Components.Popup</PackageId>
     <Description>Contains simple reusable Popup wrapper component</Description>
@@ -17,8 +17,8 @@
     <PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
     <RepositoryType>git</RepositoryType>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
-    <Version>2.0.0</Version>
-    <PackageReleaseNotes>Removed requirement for namespace parameter</PackageReleaseNotes>
+    <Version>3.0.0</Version>
+    <PackageReleaseNotes>Added Show metod without return</PackageReleaseNotes>
   </PropertyGroup>	
   
     <ItemGroup>
@@ -37,7 +37,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="7.0.12" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="8.0.1" />
   </ItemGroup>
 
 </Project>

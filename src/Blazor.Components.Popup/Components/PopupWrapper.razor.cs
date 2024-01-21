@@ -66,6 +66,19 @@ public partial class PopupWrapper
         InvokeAsync(StateHasChanged);
     }
 
+    public async Task WaitForHide()
+    {
+        while (true)
+        {
+            if (!IsVisible)
+            {
+                break;
+            }
+
+            await Task.Delay(50);
+        }
+    }
+
     private void OnCoverClick()
     {
         if (CanBeClosedByOutsideClick)

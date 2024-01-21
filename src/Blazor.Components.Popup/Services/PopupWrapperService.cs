@@ -19,6 +19,21 @@ public class PopupWrapperService
         );
     }
 
+    public async Task Show(IComponent componentToRender)
+    {
+        if (_currentPopupWrapper is null)
+        {
+            throw new InvalidOperationException("PopupWrapper is not initialized");
+        }
+
+        _currentPopupWrapper.Show(true);
+
+        var renderFragment = componentToRender.CreateRenderFragmentFromInstance();
+        _currentPopupWrapper.RenderPopupContent(renderFragment);
+
+        await _currentPopupWrapper.WaitForHide();
+    }
+
     public async Task<T?> Show<T>(IPopupable<T?> componentToRender)
     {
         return await Show(componentToRender, true, null);
