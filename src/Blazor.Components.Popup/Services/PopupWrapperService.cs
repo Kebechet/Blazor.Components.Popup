@@ -21,12 +21,17 @@ public class PopupWrapperService
 
     public async Task Show(IComponent componentToRender)
     {
+        await Show(componentToRender, true, null);
+    }
+
+    public async Task Show(IComponent componentToRender, bool isContentCentered, ModalType? modalType)
+    {
         if (_currentPopupWrapper is null)
         {
             throw new InvalidOperationException("PopupWrapper is not initialized");
         }
 
-        _currentPopupWrapper.Show(true);
+        _currentPopupWrapper.Show(isContentCentered, modalType);
 
         var renderFragment = componentToRender.CreateRenderFragmentFromInstance();
         _currentPopupWrapper.RenderPopupContent(renderFragment);
