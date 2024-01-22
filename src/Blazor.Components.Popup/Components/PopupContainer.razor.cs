@@ -14,12 +14,18 @@ public partial class PopupContainer
 
     public bool IsVisible { get; set; }
 
-    private bool _isContentCentered = true;
-    private double _opacity = 0.8;
-    private double _blur = 4;
-    private string _styleToCenterContent =
+    private readonly bool _isContentCenteredDefault = true;
+    private readonly double _opacityDefault = 0.8;
+    private readonly double _blurDefault = 4;
+
+    private bool _isContentCentered;
+    private double _currentOpacity;
+    private double _currentBlur;
+
+    private readonly string _styleToCenterContent =
         "justify-content: center;" +
         "align-items: center;";
+
     private string _style =>
         "z-index: 2000;" +
         "display: flex;" +
@@ -30,8 +36,8 @@ public partial class PopupContainer
         "width: 100%;" +
         "padding: 10px;" +
         "pointer-events: all;" +
-        $"background-color: rgba(0, 0, 0, {_opacity});" +
-        $"backdrop-filter: blur({_blur}px);" +
+        $"background-color: rgba(0, 0, 0, {_currentOpacity});" +
+        $"backdrop-filter: blur({_currentBlur}px);" +
         (_isContentCentered
             ? _styleToCenterContent
             : string.Empty
@@ -40,6 +46,7 @@ public partial class PopupContainer
     protected override void OnInitialized()
     {
         _popupService.Initialize(this);
+        SetDefaultValues();
     }
 
     public void RenderPopupContent(RenderFragment renderFragment)
@@ -53,7 +60,11 @@ public partial class PopupContainer
 
         if (modalType is not null)
         {
-            (_opacity, _blur) = modalType.Value.ToProperties();
+            (_currentOpacity, _currentBlur) = modalType.Value.ToProperties();
+        }
+        else
+        {
+            SetDefaultValues();
         }
 
         IsVisible = true;
@@ -86,5 +97,12 @@ public partial class PopupContainer
             Hide();
             OnCoverClickHide.InvokeAsync();
         }
+    }
+
+    private void SetDefaultValues()
+    {
+        _isContentCentered = _isContentCenteredDefault;
+        _currentOpacity = _opacityDefault;
+        _currentBlur = _blurDefault;
     }
 }
