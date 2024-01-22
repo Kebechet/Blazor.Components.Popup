@@ -1,27 +1,27 @@
 ﻿# Blazor.Components.Popup
 
-This repo contain `PopupWrapper` component. It's purpose is to simplify Popup usage in Blazor.
+This repo contain `PopupContainer` component. It's purpose is to simplify Popup usage in Blazor.
 
 ## Setup
 - Install nuget package `Kebechet.Blazor.Components.Popup`
 - In your `Program.cs` add:
 ```cs
-builder.Services.AddPopupWrapperServices();
+builder.Services.AddPopupServices();
 ```
 
 ## Usage
-- Ideally in `MainLayout.razor` put `<PopupWrapper />` component. This component is controlled from `PopupService` and it's purpose is to render popup content.
+- Ideally in `MainLayout.razor` put `<PopupContainer />` component. This component is controlled from `PopupService` and it's purpose is to render popup content.
     - ⚠️ At one time only 1 popup can be rendered.
 - In component where you would like to render popup inject Popup service like:
 ```cs
-@inject PopupWrapperService _popupWrapperService
+@inject PopupService _popupService
 ```
 
-- Create Popup content component. E.g. `YesNoPopup.razor` that implements interface `IPopupable<T>` with return type you need to get from the Popup. This popup content will be rendered
-inside `PopupWrapper`.
-    - ⚠️ I recommend to always use nullable type like `IPopupable<bool?>` because that way you can differentiate between person clicking `NO`/`False` and person closing the popup be clicking 
+- Create Popup content component. E.g. `YesNoPopup.razor` that implements interface `IPopupReturnable<T>` with return type you need to get from the Popup. This popup content will be rendered
+inside `PopupContainer`.
+    - ⚠️ I recommend to always use nullable type like `IPopupReturnable<bool?>` because that way you can differentiate between person clicking `NO`/`False` and person closing the popup be clicking 
     outside of it.
-    - ⚠️ The child component must have `[Parameter]` at the beginning of the `OnReturn` property, otherwise it won't work.
+    - ⚠️ The child component must have `[Parameter]` at the beginning of the `OnReturnValue` property, otherwise it won't work.
 
 `YesNoPopup.razor` part
 
@@ -42,33 +42,33 @@ using Microsoft.AspNetCore.Components;
 
 namespace BlazorApp7.Pages;
 
-public partial class YesNoComponent : IPopupable<bool?>
+public partial class YesNoComponent : IPopupReturnable<bool?>
 {
-    [Parameter] public EventCallback<bool?> OnReturn { get; set; }
+    [Parameter] public EventCallback<bool?> OnReturnValue { get; set; }
 
     public async Task Process(bool val)
     {
-        await OnReturn.InvokeAsync(val);
+        await OnReturnValue.InvokeAsync(val);
     }
 }
 ```
 
 - then in your component where you would like to render popup:
-  - inject `PopupWrapperService `
+  - inject `PopupService `
   - add functionality to trigger popup. In our case button `onClick` event
   - and finally use `Show` method to show `YesNoPopup` and get result from it
 
 `YourComponent.razor` 
 
 ```cs
-@inject PopupWrapperService _popupWrapperService
+@inject PopupService _popupService
 
 <button @onclick="Test">Trigger popup</button>
 
 @code{
     public async Task Test()
     {
-        var isSuccess =  await _popupWrapperService.Show(new YesNoPopup(), this);
+        var isSuccess =  await _popupService.Show(new YesNoPopup());
         if (isSuccess is null)
         {
             // user closed the popup

@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Components;
 
 namespace Blazor.Components.Popup.Components;
 
-public partial class PopupWrapper
+public partial class PopupContainer
 {
     [Parameter] public RenderFragment? ChildContent { get; set; }
     [Parameter] public bool CanBeClosedByOutsideClick { get; set; } = true;
@@ -39,7 +39,7 @@ public partial class PopupWrapper
 
     protected override void OnInitialized()
     {
-        _popupWrapperService.Initialize(this);
+        _popupService.Initialize(this);
     }
 
     public void RenderPopupContent(RenderFragment renderFragment)

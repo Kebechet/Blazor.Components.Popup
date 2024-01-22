@@ -10,15 +10,15 @@
     <Authors>Kebechet</Authors>
     <IsPackable>true</IsPackable>
     <PackageId>Kebechet.Blazor.Components.Popup</PackageId>
-    <Description>Contains simple reusable Popup wrapper component</Description>
+    <Description>Contains simple reusable Popup component</Description>
     <RepositoryUrl>https://github.com/Kebechet/Blazor.Components.Popup</RepositoryUrl>
     <PackageProjectUrl>https://github.com/Kebechet/Blazor.Components.Popup</PackageProjectUrl>
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
     <RepositoryType>git</RepositoryType>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
-    <Version>3.1.0</Version>
-    <PackageReleaseNotes>Added overload for Show metod without return</PackageReleaseNotes>
+    <Version>4.0.0</Version>
+    <PackageReleaseNotes>Refactoring</PackageReleaseNotes>
   </PropertyGroup>	
   
     <ItemGroup>
