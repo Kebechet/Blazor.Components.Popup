@@ -17,8 +17,8 @@
     <PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
     <RepositoryType>git</RepositoryType>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
-    <Version>4.0.1</Version>
-    <PackageReleaseNotes>Fixed design restore</PackageReleaseNotes>
+    <Version>4.0.2</Version>
+    <PackageReleaseNotes>Fixed iOS Safari blur</PackageReleaseNotes>
   </PropertyGroup>	
   
     <ItemGroup>

@@ -37,6 +37,7 @@ public partial class PopupContainer
         "padding: 10px;" +
         "pointer-events: all;" +
         $"background-color: rgba(0, 0, 0, {_currentOpacity});" +
+        $"-webkit-backdrop-filter: blur({_currentBlur}px);" + //fix for iOS Safari
         $"backdrop-filter: blur({_currentBlur}px);" +
         (_isContentCentered
             ? _styleToCenterContent
