@@ -17,8 +17,8 @@
     <PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
     <RepositoryType>git</RepositoryType>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
-    <Version>4.0.2</Version>
-    <PackageReleaseNotes>Fixed iOS Safari blur</PackageReleaseNotes>
+    <Version>4.0.3</Version>
+    <PackageReleaseNotes>Fixed double to string conversion</PackageReleaseNotes>
   </PropertyGroup>	
   
     <ItemGroup>

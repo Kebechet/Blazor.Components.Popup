@@ -1,6 +1,7 @@
 ﻿using Blazor.Components.Popup.Enums;
 using Blazor.Components.Popup.Extensions;
 using Microsoft.AspNetCore.Components;
+using System.Globalization;
 
 namespace Blazor.Components.Popup.Components;
 
@@ -36,9 +37,9 @@ public partial class PopupContainer
         "width: 100%;" +
         "padding: 10px;" +
         "pointer-events: all;" +
-        $"background-color: rgba(0, 0, 0, {_currentOpacity});" +
-        $"-webkit-backdrop-filter: blur({_currentBlur}px);" + //fix for iOS Safari
-        $"backdrop-filter: blur({_currentBlur}px);" +
+        $"background-color: rgba(0, 0, 0, {_currentOpacity.ToString(CultureInfo.InvariantCulture)});" +
+        $"-webkit-backdrop-filter: blur({_currentBlur.ToString(CultureInfo.InvariantCulture)}px);" + //fix for iOS Safari
+        $"backdrop-filter: blur({_currentBlur.ToString(CultureInfo.InvariantCulture)}px);" +
         (_isContentCentered
             ? _styleToCenterContent
             : string.Empty
